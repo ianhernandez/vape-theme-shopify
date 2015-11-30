@@ -39,6 +39,9 @@
     }
   }
 }
+.wrapper{
+  border: 2px solid rgba(0,255,50,0.7) !important;
+}
 
 /*============================================================================
   Table of Contents
@@ -159,7 +162,7 @@ $colorDrawerText: #333;
 $drawerTransition: all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1);
 
 // Sizing variables
-$siteWidth: 1180px;
+$siteWidth: 100%;
 $gutter: 30px;
 $gridGutter: 30px; // can be a %, but nested grids will have smaller margins because of it
 $radius: 3px;
@@ -747,17 +750,17 @@ body {
   @include clearfix();
   max-width: $siteWidth;
   margin: 0 auto;
-  padding: 0 ($gutter / 2);
+  //padding: 0 ($gutter / 2);
 
   @include at-query ($min, $small) {
-    padding: 0 $gutter;
+    //padding: 0 $gutter;
   }
 }
 
 .main-content {
   display: block;
-  margin-top: $gutter;
-  padding-bottom: $gutter * 2;
+  //margin-top: $gutter;
+  //padding-bottom: $gutter * 2;
 }
 
 /*============================================================================
