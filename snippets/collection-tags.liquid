@@ -21,17 +21,18 @@
     {% endif %}
 {% endfor %}
 {% endif %}
+
+
 {% comment %}
   Product tags in the current collection
 {% endcomment %}
 {% if collection.all_tags.size > 0 %}
-  <h3>{{ 'collections.sidebar.tags' | t }}</h3>
 
   {% comment %}
     To provide a 'catch-all' link at the top of the list,
     check against the collection.handle, product type, and vendor.
   {% endcomment %}
-  <ul class="no-bullets">
+  <ul class="subcategory-grid">
     <li{% unless current_tags %} class="filter--active"{% endunless %}>
 
       {% comment %}

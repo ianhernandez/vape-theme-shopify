@@ -24,11 +24,11 @@
   <!-- Helpers ================================================== -->
   {% include 'social-meta-tags' %}
   <link rel="canonical" href="{{ canonical_url }}">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="{{ settings.color_primary }}">
 
   <!-- CSS ================================================== -->
-  {{ 'timber.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
 
   <!-- Header hook for plugins ================================================== -->
   {{ content_for_header }}
@@ -151,13 +151,13 @@
     <header class="site-header" role="banner">
       <div class="h1 site-header__logo" itemscope itemtype="http://schema.org/Organization">
         <a href="/" itemprop="url" class="site-header__logo-link">
-          <img src="{{ 'v-for-vape_logo.svg' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+          <img class="mobile-logo" src="{{ 'v-for-vape_logo.svg' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
         </a>
       </div>
 
 
-    <nav class="nav-bar" role="navigation">
-      <div class="medium-down--hide">
+      <nav class="nav-bar" role="navigation">
+        <div class="medium-down--hide">
           {% comment %}
             List out your main-menu linklist (default)
 
@@ -165,68 +165,62 @@
               - http://docs.shopify.com/themes/liquid-variables/linklists
           {% endcomment %}
           <!-- begin site-nav -->
-        <ul class="site-nav" id="AccessibleNav">
-            {% for link in linklists.main-menu.links %}
-              {% comment %}
-                Create a dropdown menu by naming a linklist the same as a link in the parent nav
+          <ul class="site-nav" id="AccessibleNav">
+              {% for link in linklists.main-menu.links %}
+                {% comment %}
+                  Create a dropdown menu by naming a linklist the same as a link in the parent nav
 
-                More info on dropdowns:
-                  - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
-              {% endcomment %}
-              {% assign child_list_handle = link.title | handleize %}
-              {% if linklists[child_list_handle].links != blank %}
-                <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
-                  <a href="{{ link.url }}" class="site-nav__link">
-                    {{ link.title }}
-                    <span class="icon icon-arrow-down" aria-hidden="true"></span>
-                  </a>
-                  <ul class="site-nav__dropdown">
-                    {% for childlink in linklists[child_list_handle].links %}
-                      <li{% if childlink.active %} class="site-nav--active"{% endif %}>
-                        <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </li>
-              {% else %}
-                <li {% if link.active %}class="site-nav--active"{% endif %}>
-                  <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-          <!-- //site-nav -->
+                  More info on dropdowns:
+                    - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
+                {% endcomment %}
+                {% assign child_list_handle = link.title | handleize %}
+                {% if linklists[child_list_handle].links != blank %}
+                  <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
+                    <a href="{{ link.url }}" class="site-nav__link">
+                      {{ link.title }}
+                      <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                    </a>
+                    <ul class="site-nav__dropdown">
+                      {% for childlink in linklists[child_list_handle].links %}
+                        <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                          <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% else %}
+                  <li {% if link.active %}class="site-nav--active"{% endif %}>
+                    <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            <!-- //site-nav -->
         </div>
 
         <div class="large--hide medium-down--show">
-          <div class="grid">
-            <div class="grid__item one-half">
-              <div class="site-nav--mobile">
-                <button type="button" class="icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
-                  <span class="icon icon-hamburger" aria-hidden="true"></span>
-                  <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
-                </button>
-              </div>
-            </div>
-            <div class="grid__item one-half text-right">
-              <div class="site-nav--mobile">
-                <a href="/cart" class="js-drawer-open-right site-nav__link" aria-controls="CartDrawer" aria-expanded="false">
-                  <span class="icon-fallback-text">
-                    <span class="icon icon-cart" aria-hidden="true"></span>
-                    <span class="fallback-text">{{ 'layout.cart.title' | t }}</span>
-                  </span>
-                </a>
-              </div>
-            </div>
+
+          <div class="site-nav--mobile">
+            <a href="/cart" class="icon-fallback-text site-nav__link js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+              <span class="icon icon-cart" aria-hidden="true"></span>
+            </a>
+            <button type="button" class="icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+              <span class="icon icon-hamburger" aria-hidden="true"></span>
+            </button>
+
           </div>
+
         </div>
     </nav>
     </header>
+
+
     <main class="main-content" role="main">
       <div class="wrapper">
       {{ content_for_layout }}
       </div>
     </main>
+
 
     <!-- begin site-footer -->
     <footer class="site-footer small--text-center" role="contentinfo">
@@ -345,6 +339,8 @@
         // Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
         timber.RightDrawer.open();
       });
+
+      window.addEventListener("load", function() { window. scrollTo(0, 0); });
     </script>
   {% endif %}
 
